@@ -26,3 +26,15 @@ else:
     print("Tabelas encontradas:")
     for schema, table in tables:
         print(f"{schema}.{table}")
+
+# Criando uma tabela
+cursor.execute('CREATE TABLE clientes (' \
+'id int IDENTITY(1,1) PRIMARY KEY , ' \
+'nome VARCHAR(100), ' \
+'email VARCHAR(150),' \
+'CreatedAt DATE DEFAULT CURRENT_TIMESTAMP NOT NULL'\
+')')
+
+#cursor.execute('INSERT INTO clientes (id, nome, email) VALUES (1, "Thiago","thiagodebia@gmail.com")')
+
+#cursor.execute('SELECT * FROM clientes')
