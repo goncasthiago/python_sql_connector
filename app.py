@@ -73,3 +73,17 @@ dados=[
 
 #inserir_muitos(cnxn, cursor, dados)
     
+def listar_clientes(cursor, tabela):
+    cursor.execute(f'SELECT * FROM {tabela} ORDER BY nome')
+    results = cursor.fetchall()
+    for row in results:
+        print(row)
+
+listar_clientes(cursor,'clientes')
+
+def listar_cliente_por_id(cursor, id):
+    cursor.execute(f'SELECT * FROM clientes WHERE id=?', (id,))
+    return cursor.fetchone()
+    
+
+print(listar_cliente_por_id(cursor,2))
