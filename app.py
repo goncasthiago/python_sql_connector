@@ -11,6 +11,8 @@ cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER=localhost;DATABASE=master;UID=
 # Cria um cursor
 cursor = cnxn.cursor()
 
+ 
+
 # Lista todas as tabelas (usuário + sistema)
 cursor.execute("""
     SELECT TABLE_SCHEMA, TABLE_NAME
@@ -72,14 +74,22 @@ dados=[
 ]
 
 #inserir_muitos(cnxn, cursor, dados)
+
     
 def listar_clientes(cursor, tabela):
+    res=[]
     cursor.execute(f'SELECT * FROM {tabela} ORDER BY nome')
+    columns = [column[0] for column in cursor.description]
     results = cursor.fetchall()
+    
     for row in results:
-        print(row)
+        res.append(dict(zip(columns, row)))
+    return res
 
-listar_clientes(cursor,'clientes')
+res = listar_clientes(cursor,'clientes')
+
+print(type(res))
+print(res[0]['nome'])
 
 def listar_cliente_por_id(cursor, id):
     cursor.execute(f'SELECT * FROM clientes WHERE id=?', (id,))
@@ -87,3 +97,4 @@ def listar_cliente_por_id(cursor, id):
     
 
 print(listar_cliente_por_id(cursor,2))
+
